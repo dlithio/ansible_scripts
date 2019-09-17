@@ -1,0 +1,6 @@
+- name: Autoupdate in cron
+  cron:
+    name: apt autoupdate
+    minute: "33"
+    hour: "3"
+    job: apt-get -y update && apt-get -y dist-upgrade && apt-get -y autoremove && reboot

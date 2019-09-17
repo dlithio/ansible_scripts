@@ -1,0 +1,5 @@
+- name: Copy local gitconfig to remote machine
+  copy: 
+    src: ~/.gitconfig
+    dest: ~/.gitconfig
+  become: false

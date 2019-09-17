@@ -1,0 +1,24 @@
+- name: Disable password ssh logins
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*PasswordAuthentication '
+    line: PasswordAuthentication no
+  notify: restart sshd
+- name: Disable PAM on ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*UsePAM '
+    line: UsePAM no
+  notify: restart sshd
+- name: Disable Challenge on ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*ChallengeResponseAuthentication '
+    line: ChallengeResponseAuthentication no
+  notify: restart sshd
+- name: Only allow pi user over ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*AllowUsers '
+    line: AllowUsers pi
+  notify: restart sshd

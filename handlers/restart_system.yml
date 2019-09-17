@@ -1,0 +1,13 @@
+- name: Wait for system to become reachable again
+  wait_for_connection:
+      delay: 0
+      timeout: 300
+  listen: restart system
+- name: Verify new update (optional)
+  command: uname -mrs
+  register: uname_result
+  listen: restart system
+- name: Display new kernel version
+  debug:
+    var: uname_result.stdout_lines
+  listen: restart system

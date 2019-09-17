@@ -1,0 +1,13 @@
+- name: Set the locale via raspi-config
+  command: raspi-config nonint do_change_locale "en_US.UTF-8"
+  when: ansible_env["LANG"] != "en_US.UTF-8" or ansible_env["LC_CTYPE"] != "en_US.UTF-8"
+- name: Get current keyboard and store as var
+  shell: cat /etc/default/keyboard
+  register: keyboard_contents
+  changed_when: false
+- name: Set the keyboard layout via raspi-config
+  command: raspi-config nonint do_configure_keyboard "us"
+  when: keyboard_contents.stdout.find('XKBLAYOUT="us"') == -1
+- name: set timezone
+  command: raspi-config nonint do_change_timezone "US/Central"
+  when: ansible_date_time["tz"] != "CDT"

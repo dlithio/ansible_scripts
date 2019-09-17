@@ -1,0 +1,12 @@
+- hosts: pi_default
+  become: true
+  tasks:
+    - include_tasks: ../tasks/apt_raspi.yml
+    - include_tasks: ../tasks/raspi-config.yml
+    - include_tasks: ../tasks/zsh.yml
+    - include_tasks: ../tasks/auto_update.yml
+    - include_tasks: ../tasks/git_config.yml
+    - include_tasks: ../tasks/ssh_secure.yml
+  handlers:
+    - include_tasks: ../tasks/restart_sshd.yml
+    - include_tasks: ../tasks/restart_system.yml

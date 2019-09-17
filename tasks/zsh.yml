@@ -1,0 +1,39 @@
+- name: Update/clone oh-my-zsh
+  git: 
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: ~/.oh-my-zsh
+  register: ohmyzshupdate
+  become: false
+- name: Creating new ~/.zshrc
+  copy: 
+    remote_src: true
+    src: ~/.oh-my-zsh/templates/zshrc.zsh-template
+    dest: ~/.zshrc
+  when: ohmyzshupdate is changed
+  register: ohmyzsh
+  become: false
+- name: Touch a file where personal zshrc stuff should go
+  file:
+    path: ~/.zshrc_user
+    state: touch
+    mode: u=rw,g=r,o=r
+  become: false
+  when: ohmyzsh is changed
+- name: Customize zshrc
+  blockinfile:
+    path: ~/.zshrc
+    block: |
+      source ~/.zshrc_user
+      export VISUAL="$(command -v vim)"
+      export EDITOR="$VISUAL"
+  become: false
+- name: Change zsh theme
+  lineinfile:
+    path: ~/.zshrc
+    regexp: "^ZSH_THEME="
+    line: ZSH_THEME="fishy"
+  become: false
+- name: Set zsh as default shell
+  user:
+    name: pi
+    shell: /bin/zsh

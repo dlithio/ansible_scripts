@@ -1,0 +1,17 @@
+- name: Update all packages to the latest version
+  apt:
+    update_cache: true
+    upgrade: dist
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - zsh
+      - vim
+      - git
+      - aptitude
+      - pipenv
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: true
