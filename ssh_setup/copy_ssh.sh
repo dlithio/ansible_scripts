@@ -10,6 +10,6 @@ PI_IP="$1"
 
 echo "When prompted, use the password:"
 echo "raspberry"
-#rsync -av ~/.ssh pi@"$PI_IP":~/
-#ssh-copy-id pi@"$PI_IP"
+rsync -av ~/.ssh pi@"$PI_IP":~/
+ssh-copy-id pi@"$PI_IP"
 ssh pi@"$PI_IP" "rm ~/.ssh/config"
