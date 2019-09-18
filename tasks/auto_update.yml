@@ -2,4 +2,4 @@
   cron:
     name: apt autoupdate
     minute: "0"
-    job: /usr/bin/apt-get -y update && /usr/bin/apt-get -y dist-upgrade && /usr/bin/apt-get -y autoremove && [ -f /var/run/reboot-required ] && reboot
+    job: /usr/bin/apt -y update && /usr/bin/apt -y full-upgrade && /usr/bin/apt -y autoremove && [ -f /var/run/reboot-required ] && reboot
