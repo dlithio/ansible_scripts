@@ -3,4 +3,4 @@
     name: apt autoupdate
     minute: "33"
     hour: "3"
-    job: apt-get -y update && apt-get -y dist-upgrade && apt-get -y autoremove && reboot
+    job: apt-get -y update && apt-get -y dist-upgrade && apt-get -y autoremove && [[ -f /var/run/reboot-required ]] && reboot
