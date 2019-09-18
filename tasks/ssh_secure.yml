@@ -4,11 +4,11 @@
     regexp: '^[#\s]*PasswordAuthentication '
     line: PasswordAuthentication no
   notify: restart sshd
-- name: Disable PAM on ssh
+- name: Enable PAM on ssh for systemctl but no password auth
   lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^[#\s]*UsePAM '
-    line: UsePAM no
+    line: UsePAM yes
   notify: restart sshd
 - name: Disable Challenge on ssh
   lineinfile:
@@ -21,4 +21,16 @@
     path: /etc/ssh/sshd_config
     regexp: '^[#\s]*AllowUsers '
     line: AllowUsers pi
+  notify: restart sshd
+- name: Only publickey auth
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*AuthenticationMethods '
+    line: AuthenticationMethods publickey
+  notify: restart sshd
+- name: No root login over ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^[#\s]*PermitRootLogin '
+    line: PermitRootLogin no
   notify: restart sshd
