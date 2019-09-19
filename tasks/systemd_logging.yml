@@ -1,0 +1,10 @@
+- name: Create systemd log dir if it does not exist
+  file:
+    path: /var/log/journal
+    state: directory
+  register: logdircreate
+- name: Add logdir to systemd and restart journal
+  shell: |
+    systemd-tmpfiles --create --prefix /var/log/journal
+    systemctl restart systemd-journald
+  when: logdircreate is changed
