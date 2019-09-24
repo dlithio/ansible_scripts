@@ -1,0 +1,4 @@
+- name: Set fish as default shell
+  user:
+    name: pi
+    shell: /usr/bin/fish
