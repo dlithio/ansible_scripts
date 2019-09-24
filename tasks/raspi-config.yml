@@ -1,6 +1,11 @@
+- name: Get local set in file
+  shell: grep "^LANG=en_US.UTF-8" /etc/default/locale
+  register: locale_contents
+  changed_when: false
+  ignore_errors: true
 - name: Set the locale via raspi-config
   command: raspi-config nonint do_change_locale "en_US.UTF-8"
-  when: ansible_env["LANG"] != "en_US.UTF-8" or ansible_env["LC_CTYPE"] != "en_US.UTF-8"
+  when: locale_contents.stdout == ""
 - name: Get current keyboard and store as var
   shell: cat /etc/default/keyboard
   register: keyboard_contents
